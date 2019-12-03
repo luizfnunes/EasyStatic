@@ -1,0 +1,100 @@
+/* CSS */
+*{margin:0;padding:0; box-sizing:border-box;outline:none}
+body{
+    font-family: Arial, sans-serif;
+    font-size:16px;
+}
+a{
+    text-decoration:none;
+    color: #0984e3;
+}
+input[type="text"]{
+    padding: 4px;
+    border: 1px solid #f0f0f0;
+}
+header{
+    display:flex;
+    justify-content: center;
+    font-size: 32px;
+    /*border-bottom: 1px solid #f9ad72;*/
+    /*border-bottom: 1px solid #72bef9;*/
+    border-bottom: 1px solid #f0f0f0;
+    padding:10px;
+}
+h1,h2,h3,h4,h5{
+    color: #e36809;
+    margin:5px;
+}
+.content{
+    max-width: 600px;
+    margin:10px auto;
+}
+table{
+    display: table;
+    width: 100%;
+    margin:5px;
+}
+table tr{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+table tr td:first-child{
+    flex-grow: 1;
+}
+hr{
+    border: 0;
+    border-top: 1px solid #f0f0f0;
+    margin:10px 5px;
+}
+
+button, .btn{
+    padding: 7px;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    color: #FFF;
+    font-size: 14px;
+    font-weight: bold;
+    margin:5px;
+    border: 1px solid transparent;
+    display: inline-block;
+    -webkit-appearance: button;
+}
+
+.primary{ background: #0984e3; border: 1px solid #0984e3;}
+.secondary{ background: #e36809; border: 1px solid #e36809;}
+.success{ background: #55efc4; border: 1px solid #55efc4;}
+.delete{ background: #d63031; border: 1px solid #d63031;}
+div.modal{
+    display:none;
+    padding: 10px;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+div.modal > form,
+div.modal > div{
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+}
+div.modal > form > *,
+div.modal > div > *{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+

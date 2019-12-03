@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}| Databases{% endblock %}
+{% block content %}
+        <p>
+            <button class="primary" id="btnCreateModal">New Database</button>
+        </p>
+        <hr/>
+        {% if dbs | length > 0 %}
+        <h4>Databases ({{ dbs | length }}):</h4>
+        <table>
+            {% for db in dbs %}
+            <tr>
+                <td>{{ db | upper }}</td>
+                <td>
+                    <button class="secondary">Manage</button>
+                </td>
+                <td>
+                    <button class="success">Backup</button>
+                </td>
+                <td>
+                    <button class="delete openModalDelete" data-db="{{ db | upper }}">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>You have no database created, start by clicking on NEW DATABASE!</p>
+        {% endif %}
+    <div class="modal" id="createModal">
+        <form method="POST" action="/database/create">
+            <label>Database Name:</label>
+            <input type="text" name="dbname" minlength="3" required/>
+            <div class="footer">
+                <button class="success" type="submit">Create</button>
+                <button class="delete close" type="button">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <div class="modal" id="deleteModal">
+        <div>
+            <p>Do you really want to delete the database <span class="db"></span>?</p>
+            <form method="POST" action="/database/delete">
+                <div class="footer">
+                    <input id="dbtodel" name="dbtodel" type="hidden">
+                    <button class="btn success" type="submit">Yes</button>
+                    <button class="btn delete close" type="button">No</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+    var modalList = document.getElementsByClassName("modal");
+    var closeButtonList = document.getElementsByClassName("close");
+    for( let i = 0; i < closeButtonList.length; i++){
+        closeButtonList[i].onclick = function(){
+            for( let j=0; j < modalList.length; j++){
+                modalList[j].style.display = "none";
+            }
+        }
+    }
+    var createButton = document.getElementById("btnCreateModal");
+    var createModal = document.getElementById("createModal");
+    createButton.onclick = function(){
+        createModal.style.display = "block";
+    }
+    var deleteModal = document.getElementById("deleteModal");
+    var deleteButtonList = document.getElementsByClassName("openModalDelete");
+    for(let i = 0; i < deleteButtonList.length; i++ ){
+        deleteButtonList[i].onclick = function(){
+            deleteModal.style.display = "block";
+            deleteModal.getElementsByClassName("db")[0].innerHTML = deleteButtonList[i].dataset.db;
+            deleteModal.querySelector("#dbtodel").value = deleteButtonList[i].dataset.db;
+        }
+    }
+</script>
+{% endblock %}
