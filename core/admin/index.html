@@ -12,7 +12,7 @@
             <tr>
                 <td>{{ db | upper }}</td>
                 <td>
-                    <button class="secondary">Manage</button>
+                    <button class="secondary manage" data-db="{{ db | upper}}">Manage</button>
                 </td>
                 <td>
                     <button class="success">Backup</button>
@@ -72,6 +72,14 @@
             deleteModal.style.display = "block";
             deleteModal.getElementsByClassName("db")[0].innerHTML = deleteButtonList[i].dataset.db;
             deleteModal.querySelector("#dbtodel").value = deleteButtonList[i].dataset.db;
+        }
+    }
+    var manageButtonList = document.getElementsByClassName("manage");
+    for(let i=0; i < manageButtonList.length; i++){
+        manageButtonList[i].onclick = function(){
+            var db = this.dataset.db;
+            console.log(db);
+            location.href = "/manage/"+db;
         }
     }
 </script>

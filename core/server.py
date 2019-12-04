@@ -49,18 +49,27 @@ class Server:
             if name.endswith(".db"):
                 name = name.replace(".db", "")
             name = "".join([letter for letter in name if letter.isalnum() or letter == "_"])
-            name = name+".db"
+            name = name + ".db"
             name = name.upper()
             db = Database(database=name)
             db.create_base()
         elif action == "delete":
             file = request.forms.get("dbtodel")
-            dir_fd = os.getcwd()
-            path = str(dir_fd)+"/data/"+file
-            if os.path.exists(path):
-                os.remove(path)
+            if self._db_exist(file):
+                os.remove(str(os.getcwd()) + "/data/" + file)
         redirect("/")
 
-    def manage_index(self):
+    def manage_index(self, dbname):
+        if not self._db_exist(dbname):
+            redirect("/")
+        db = Database(dbname)
+        data = db.list_sites()
         template = self.env.get_template('manage.html')
-        return template.render()
+        return template.render(data=data)
+
+    def _db_exist(self, dbname):
+        dir_fd = os.getcwd()
+        path = str(dir_fd) + "/data/" + dbname
+        if os.path.exists(path):
+            return True
+        return False

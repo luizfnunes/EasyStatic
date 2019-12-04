@@ -11,11 +11,22 @@ class Database:
         cursor.executescript(sql)
         self.connection.commit()
 
+    def _execute_script_with_return(self, sql):
+        cursor = self.connection.cursor()
+        cursor.executescript(sql)
+        return cursor.fetchall()
+
     def _execute_script_params(self, sql, *argv):
         args = tuple(argv)
         cursor = self.connection.cursor()
         cursor.execute(sql, args)
         self.connection.commit()
+
+    def _execute_script_params_with_return(self, sql, *argv):
+        args = tuple(argv)
+        cursor = self.connection.cursor()
+        cursor.execute(sql, args)
+        return cursor.fetchall()
 
     def create_base(self):
         with open("core/scripts/extruture.sql") as file_script:
@@ -41,3 +52,9 @@ class Database:
         with open("core/scripts/update_posts.sql") as file_script:
             sql = file_script.read()
         self._execute_script_params(sql, title, text, tags, id)
+
+    def list_sites(self):
+        with open("core/scripts/list_sites.sql") as file_script:
+            sql = file_script.read()
+        query = self._execute_script_with_return(sql)
+        return query
